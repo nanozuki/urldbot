@@ -9,5 +9,6 @@ export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  prettier
+  prettier,
+  { ignores: ['build/', '.wrangler/', 'dist/', 'node_modules/'] },
 ];

@@ -2,11 +2,12 @@
   "name": "urldbot",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "wrangler dev",
+    "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "preview": "wrangler pages dev",
-    "deploy": "$npm_execpath run build && wrangler pages deploy",
-    "lint": "prettier --check . && eslint ."
+    "deploy": "wrangler deploy --minify",
+    "lint": "prettier --check . && eslint .",
+    "set-webhook": "tsx ./src/setWebhook.ts"
   },
   "dependencies": {
     "hono": "^4.5.3"
@@ -14,12 +15,15 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
     "@eslint/js": "^9.8.0",
+    "@grammyjs/types": "^3.12.0",
     "@hono/vite-cloudflare-pages": "^0.4.2",
     "@hono/vite-dev-server": "^0.13.1",
+    "@types/node": "^22.1.0",
     "eslint": "9.x",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
+    "tsx": "^4.16.5",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.2.12",
