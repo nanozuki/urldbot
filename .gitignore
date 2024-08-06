@@ -16,9 +16,11 @@ node_modules/
 .wrangler
 
 # env
+.dev.vars
+.direnv/
 .env
 .env.production
-.dev.vars
+.envrc
 
 # logs
 logs/
@@ -31,5 +33,3 @@ lerna-debug.log*
 
 # misc
 .DS_Store
-.direnv/
-.envrc

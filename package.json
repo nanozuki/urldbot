@@ -5,15 +5,23 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "wrangler pages dev",
-    "deploy": "$npm_execpath run build && wrangler pages deploy"
+    "deploy": "$npm_execpath run build && wrangler pages deploy",
+    "lint": "prettier --check . && eslint ."
   },
   "dependencies": {
     "hono": "^4.5.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@eslint/js": "^9.8.0",
     "@hono/vite-cloudflare-pages": "^0.4.2",
     "@hono/vite-dev-server": "^0.13.1",
+    "eslint": "9.x",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1",
     "vite": "^5.2.12",
     "wrangler": "^3.57.2"
   }
