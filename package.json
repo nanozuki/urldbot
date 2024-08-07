@@ -7,7 +7,7 @@
     "preview": "wrangler pages dev",
     "deploy": "wrangler deploy --minify",
     "lint": "prettier --check . && eslint .",
-    "set-webhook": "tsx ./src/setWebhook.ts"
+    "set-webhook": "tsx --env-file=.env ./src/setWebhook.ts"
   },
   "dependencies": {
     "hono": "^4.5.3"

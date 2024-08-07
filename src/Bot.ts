@@ -1,4 +1,6 @@
 import type { ApiResponse, Update, ApiMethods } from '@grammyjs/types';
+import { doctors, cleaner } from './doctors';
+import { getUrlFromMessage, Reply } from './doctor';
 
 export class Bot {
   constructor(private token: string) {}
@@ -35,24 +37,37 @@ export class Bot {
   async handleUpdate(update: Update): Promise<object> {
     console.log(update);
     if (update.inline_query) {
+      const replies = await getReply(update.inline_query.query);
       const anwser: InlineQueryAnswer = {
         method: 'answerInlineQuery',
         inline_query_id: update.inline_query.id,
-        results: [
-          {
-            type: 'article',
-            id: '1',
-            title: 'Echo',
-            input_message_content: {
-              message_text: update.inline_query.query,
-            },
+        results: replies.map((reply, i) => ({
+          type: 'article',
+          id: (i + 1).toString(),
+          title: reply.title,
+          input_message_content: {
+            message_text: reply.href,
           },
-        ],
+        })),
       };
       return anwser;
     }
     return {};
   }
+}
+
+async function getReply(message: string): Promise<Reply[]> {
+  const u = getUrlFromMessage(message);
+  if (!u) {
+    return [];
+  }
+  for (const doctor of doctors) {
+    const replies = await doctor(u);
+    if (replies.length > 0) {
+      return replies;
+    }
+  }
+  return cleaner(u);
 }
 
 type InlineQueryAnswer = Parameters<
