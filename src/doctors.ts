@@ -1,7 +1,7 @@
 import {
   cleanUrl,
   type Doctor,
-  getUrlFromRedirectHTML,
+  getUrlFromRedirect,
   Reply,
   cleanUrlReply,
 } from './doctor';
@@ -11,7 +11,7 @@ const bilibili: Doctor = async (url: URL): Promise<Reply[]> => {
     return [{ title: 'Clean URL', href: cleanUrl(url).href }];
   }
   if (url.hostname === 'b23.tv') {
-    const u = await getUrlFromRedirectHTML(url.href);
+    const u = await getUrlFromRedirect(url.href);
     console.log('get u: ', u);
     if (u) {
       return [
@@ -32,10 +32,9 @@ const twitter: Doctor = async (url: URL): Promise<Reply[]> => {
     if (parts.length !== 3 || parts[1] !== 'status') {
       return [cleanUrlReply(url)];
     }
-    const fxHost =
-      url.hostname === 'twitter.com' ? 'fxtwitter.com' : 'fixupx.com';
     return [
-      { title: 'FxTwitter', href: `https://${fxHost}${url.pathname}` },
+      { title: 'FixupX', href: `https://fixupx.com${url.pathname}` },
+      { title: 'FxTwitter', href: `https://fxtwitter.com${url.pathname}` },
       { title: 'VxTwitter', href: `https://vxtwitter.com${url.pathname}` },
     ];
   }
@@ -44,12 +43,10 @@ const twitter: Doctor = async (url: URL): Promise<Reply[]> => {
 
 const xhs: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'xhslink.com') {
-    const u = await getUrlFromRedirectHTML(url.href);
+    const u = await getUrlFromRedirect(url.href);
     if (u) {
-      if (u.pathname.startsWith('/discovery/item/')) {
-        u.pathname = u.pathname.replace('/discovery/item/', '/explore/');
-      }
-      return [{ title: '小红书', href: cleanUrl(u).href }];
+      const href = cleanUrl(u, ['xsec_token']).href;
+      return [{ title: '小红书', href: href }];
     }
     return [];
   }

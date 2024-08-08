@@ -6,7 +6,6 @@ export interface Reply {
 export type Doctor = (url: URL) => Promise<Reply[]>;
 
 const urlReg = /(https?:\/\/)?[-\w]+(\.[-\w]+)+(\/\S*[^\s\p{P}])?/iu;
-const hrefReg = /href="(https:\/\/[^"<>]*)"/i;
 
 /* Example for parse url
 
@@ -50,17 +49,14 @@ export function getUrlFromMessage(message: string): URL | null {
   return match ? parseURL(match[0]) : null;
 }
 
-export async function getUrlFromRedirectHTML(url: string): Promise<URL | null> {
+export async function getUrlFromRedirect(url: string): Promise<URL | null> {
   const response = await fetch(url, { redirect: 'manual' });
   if (response.status >= 400) {
     console.error(`Failed to fetch URL: ${response.status}`);
     return null;
   }
-  const html = await response.text();
-  console.log('html: ', html);
-  const match = html.match(hrefReg);
-  console.log('match: ', match);
-  return match ? parseURL(match[1]) : null;
+  const target = response.headers.get('location');
+  return target ? parseURL(target) : null;
 }
 
 // cleanURL remove all query parameters in URL, except for the specified ones
