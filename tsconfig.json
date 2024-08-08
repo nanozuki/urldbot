@@ -6,6 +6,6 @@
     "strict": true,
     "skipLibCheck": true,
     "lib": ["ESNext"],
-    "types": ["@cloudflare/workers-types", "vite/client", "@types/node"]
+    "types": ["@cloudflare/workers-types", "@types/node"]
   }
 }
