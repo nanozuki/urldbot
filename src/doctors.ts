@@ -36,7 +36,7 @@ const twitter: Doctor = async (url: URL): Promise<Reply[]> => {
       url.hostname === 'twitter.com' ? 'fxtwitter.com' : 'fixupx.com';
     return [
       { title: 'FxTwitter', href: `https://${fxHost}${url.pathname}` },
-      { title: 'VxTwitter', href: `https://vx.twitter.com${url.pathname}` },
+      { title: 'VxTwitter', href: `https://vxtwitter.com${url.pathname}` },
     ];
   }
   return [];

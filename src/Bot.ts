@@ -29,7 +29,7 @@ export class Bot {
   async registerWebhook(host: string): Promise<void> {
     await this.callApi<boolean>('setWebhook', {
       url: `https://${host}/updates/${this.token}`,
-      allowed_updates: ['inline_query'],
+      allowed_updates: ['inline_query', 'message', 'edited_message'],
     });
     return;
   }
@@ -51,6 +51,24 @@ export class Bot {
         })),
       };
       return anwser;
+    }
+    const message = update.message || update.edited_message;
+    if (message?.text) {
+      const replies = await getReply(message.text);
+      for (const reply of replies) {
+        await this.callApi<boolean>('sendMessage', {
+          chat_id: message.chat.id,
+          text: reply.href,
+          link_preview_options: { is_disabled: false },
+        });
+      }
+      if (replies.length === 0) {
+        return {
+          method: 'sendMessage',
+          chat_id: message.chat.id,
+          text: 'No supported URL found.',
+        };
+      }
     }
     return {};
   }
