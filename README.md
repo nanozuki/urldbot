@@ -1,8 +1,3 @@
-```txt
-npm install
-npm run dev
-```
+# URLDBOT
 
-```txt
-npm run deploy
-```
+A telegram bot, a url doctor.
