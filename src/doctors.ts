@@ -10,7 +10,7 @@ const bilibili: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'www.bilibili.com' || url.hostname === 'bilibili.com') {
     return [{ title: 'Clean URL', href: cleanUrl(url).href }];
   }
-  if (url.hostname === 'b23.tv') {
+  if (url.hostname === 'b23.tv' || url.hostname === 'bili2233.cn') {
     const u = await getUrlFromRedirect(url.href);
     console.log('get u: ', u);
     if (u) {
@@ -67,8 +67,16 @@ const youtube: Doctor = async (url: URL): Promise<Reply[]> => {
   return [];
 };
 
+const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
+  if (url.hostname.includes('.zhihu.com')) {
+    url.hostname = url.hostname.replace('.zhihu.com', '.fxzhihu.com');
+    return [{ title: 'FxZhihu', href: url.href }];
+  }
+  return [];
+};
+
 export const cleaner: Doctor = async (url: URL): Promise<Reply[]> => {
   return [cleanUrlReply(url)];
 };
 
-export const doctors = [bilibili, twitter, xhs, youtube];
+export const doctors = [bilibili, twitter, xhs, youtube, zhihu];

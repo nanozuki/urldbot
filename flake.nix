@@ -16,7 +16,9 @@
       perSystem = { config, self', inputs', pkgs, system, ... }: {
         devshells.default = {
           packages = with pkgs; [
-            pnpm
+            nodePackages.nodejs
+            nodePackages.pnpm
+            nodePackages.npm
           ];
           # env = [
           #   { name = "Key"; value = "Value"; }

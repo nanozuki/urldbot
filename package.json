@@ -10,20 +10,20 @@
     "set-webhook": "tsx --env-file=.env ./src/setWebhook.ts"
   },
   "dependencies": {
-    "hono": "^4.5.3"
+    "hono": "^4.6.15"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240529.0",
-    "@eslint/js": "^9.8.0",
-    "@grammyjs/types": "^3.12.0",
-    "@types/node": "^22.1.0",
-    "eslint": "9.x",
+    "@cloudflare/workers-types": "^4.20241230.0",
+    "@eslint/js": "^9.17.0",
+    "@grammyjs/types": "^3.18.0",
+    "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
-    "globals": "^15.9.0",
-    "prettier": "^3.3.3",
-    "tsx": "^4.16.5",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.1",
-    "wrangler": "^3.57.2"
-  }
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
+    "wrangler": "^3.99.0"
+  },
+  "packageManager": "pnpm@9.15.1"
 }
