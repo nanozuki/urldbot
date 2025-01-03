@@ -10,7 +10,7 @@ const bilibili: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'www.bilibili.com' || url.hostname === 'bilibili.com') {
     return [{ title: 'Clean URL', href: cleanUrl(url).href }];
   }
-  if (url.hostname === 'b23.tv' || url.hostname === 'bili2233.com') {
+  if (url.hostname === 'b23.tv' || url.hostname === 'bili2233.cn') {
     const u = await getUrlFromRedirect(url.href);
     console.log('get u: ', u);
     if (u) {
