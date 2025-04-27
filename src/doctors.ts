@@ -50,6 +50,12 @@ const xhs: Doctor = async (url: URL): Promise<Reply[]> => {
     }
     return [];
   }
+  if (
+    url.hostname === 'www.xiaohongshu.com' ||
+    url.hostname === 'xiaohongshu.com'
+  ) {
+    return [{ title: '小红书', href: cleanUrl(url, ['xsec_token']).href }];
+  }
   return [];
 };
 
