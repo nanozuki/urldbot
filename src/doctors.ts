@@ -30,7 +30,10 @@ const twitter: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'twitter.com' || url.hostname === 'x.com') {
     const parts = url.pathname.substring(1).split('/');
     if (parts.length !== 3 || parts[1] !== 'status') {
-      return [cleanUrlReply(url)];
+      const clean = cleanUrlReply(url);
+      url.hostname = 'nitter.net';
+      const nitter = { title: 'Nitter', href: cleanUrlReply(url).href };
+      return [clean, nitter];
     }
     return [
       { title: 'FixupX', href: `https://fixupx.com${url.pathname}` },
@@ -74,14 +77,6 @@ const youtube: Doctor = async (url: URL): Promise<Reply[]> => {
   return [];
 };
 
-const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
-  if (url.hostname.includes('.zhihu.com')) {
-    url.hostname = url.hostname.replace('.zhihu.com', '.fxzhihu.com');
-    return [{ title: 'FxZhihu', href: cleanUrl(url).href }];
-  }
-  return [];
-};
-
 const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname.includes('.instagram.com')) {
     const parts = url.pathname.substring(1).split('/');
@@ -99,4 +94,4 @@ export const cleaner: Doctor = async (url: URL): Promise<Reply[]> => {
   return [cleanUrlReply(url)];
 };
 
-export const doctors = [bilibili, twitter, xhs, youtube, zhihu, instagram];
+export const doctors = [bilibili, twitter, xhs, youtube, instagram];
