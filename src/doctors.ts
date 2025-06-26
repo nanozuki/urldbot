@@ -84,7 +84,7 @@ const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
 const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname.includes('.instagram.com')) {
     const parts = url.pathname.substring(1).split('/');
-    if (parts.length < 2 || parts[0] !== 'oembed') {
+    if (parts.length === 0 || (parts.length === 1 && parts[0] !== 'oembed')) {
       // ref: https://github.com/Wikidepia/InstaFix/blob/main/main.go
       return [cleanUrlReply(url)];
     }
