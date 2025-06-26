@@ -36,6 +36,7 @@ const twitter: Doctor = async (url: URL): Promise<Reply[]> => {
       { title: 'FixupX', href: `https://fixupx.com${url.pathname}` },
       { title: 'FxTwitter', href: `https://fxtwitter.com${url.pathname}` },
       { title: 'VxTwitter', href: `https://vxtwitter.com${url.pathname}` },
+      { title: 'Nitter', href: `https://nitter.net${url.pathname}` },
     ];
   }
   return [];
