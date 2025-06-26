@@ -8,7 +8,7 @@ import {
 
 const bilibili: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'www.bilibili.com' || url.hostname === 'bilibili.com') {
-    return [{ title: 'Clean URL', href: cleanUrl(url).href }];
+    return [cleanUrlReply(url)];
   }
   if (url.hostname === 'b23.tv' || url.hostname === 'bili2233.cn') {
     const u = await getUrlFromRedirect(url.href);
@@ -76,15 +76,20 @@ const youtube: Doctor = async (url: URL): Promise<Reply[]> => {
 const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname.includes('.zhihu.com')) {
     url.hostname = url.hostname.replace('.zhihu.com', '.fxzhihu.com');
-    return [{ title: 'FxZhihu', href: url.href }];
+    return [{ title: 'FxZhihu', href: cleanUrl(url).href }];
   }
   return [];
 };
 
 const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname.includes('.instagram.com')) {
+    const parts = url.pathname.substring(1).split('/');
+    if (parts.length < 2 || parts[0] !== 'oembed') {
+      // ref: https://github.com/Wikidepia/InstaFix/blob/main/main.go
+      return [cleanUrlReply(url)];
+    }
     url.hostname = url.hostname.replace('.instagram.com', '.ddinstagram.com');
-    return [{ title: 'DDInstagram', href: url.href }];
+    return [{ title: 'DDInstagram', href: cleanUrl(url).href }];
   }
   return [];
 };
