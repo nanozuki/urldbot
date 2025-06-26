@@ -81,8 +81,16 @@ const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
   return [];
 };
 
+const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
+  if (url.hostname.includes('.instagram.com')) {
+    url.hostname = url.hostname.replace('.instagram.com', '.ddinstagram.com');
+    return [{ title: 'DDInstagram', href: url.href }];
+  }
+  return [];
+};
+
 export const cleaner: Doctor = async (url: URL): Promise<Reply[]> => {
   return [cleanUrlReply(url)];
 };
 
-export const doctors = [bilibili, twitter, xhs, youtube, zhihu];
+export const doctors = [bilibili, twitter, xhs, youtube, zhihu, instagram];
