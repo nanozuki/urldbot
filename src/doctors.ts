@@ -8,7 +8,7 @@ import {
 
 const bilibili: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'www.bilibili.com' || url.hostname === 'bilibili.com') {
-    return [{ title: 'Clean URL', href: cleanUrl(url).href }];
+    return [cleanUrlReply(url)];
   }
   if (url.hostname === 'b23.tv' || url.hostname === 'bili2233.cn') {
     const u = await getUrlFromRedirect(url.href);
@@ -30,12 +30,16 @@ const twitter: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname === 'twitter.com' || url.hostname === 'x.com') {
     const parts = url.pathname.substring(1).split('/');
     if (parts.length !== 3 || parts[1] !== 'status') {
-      return [cleanUrlReply(url)];
+      const clean = cleanUrlReply(url);
+      url.hostname = 'nitter.net';
+      const nitter = { title: 'Nitter', href: cleanUrlReply(url).href };
+      return [clean, nitter];
     }
     return [
       { title: 'FixupX', href: `https://fixupx.com${url.pathname}` },
       { title: 'FxTwitter', href: `https://fxtwitter.com${url.pathname}` },
       { title: 'VxTwitter', href: `https://vxtwitter.com${url.pathname}` },
+      { title: 'Nitter', href: `https://nitter.net${url.pathname}` },
     ];
   }
   return [];
@@ -73,20 +77,15 @@ const youtube: Doctor = async (url: URL): Promise<Reply[]> => {
   return [];
 };
 
-const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
-  if (url.hostname.includes('.zhihu.com')) {
-    url.hostname = url.hostname.replace('.zhihu.com', '.fxzhihu.com');
-    return [{ title: 'FxZhihu', href: url.href }];
-  }
-  return [];
-};
-
 const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname.includes('.instagram.com')) {
+    const parts = url.pathname.substring(1).split('/');
+    if (parts.length === 0 || (parts.length === 1 && parts[0] !== 'oembed')) {
+      // ref: https://github.com/Wikidepia/InstaFix/blob/main/main.go
+      return [cleanUrlReply(url)];
+    }
     url.hostname = url.hostname.replace('.instagram.com', '.kkinstagram.com');
-    return [
-      { title: 'KKInstagram', href: url.href },
-    ];
+    return [{ title: 'KKInstagram', href: cleanUrl(url).href }];
   }
   return [];
 };
@@ -95,4 +94,4 @@ export const cleaner: Doctor = async (url: URL): Promise<Reply[]> => {
   return [cleanUrlReply(url)];
 };
 
-export const doctors = [bilibili, twitter, xhs, youtube, zhihu, instagram];
+export const doctors = [bilibili, twitter, xhs, youtube, instagram];
