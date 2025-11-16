@@ -83,8 +83,10 @@ const zhihu: Doctor = async (url: URL): Promise<Reply[]> => {
 
 const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
   if (url.hostname.includes('.instagram.com')) {
-    url.hostname = url.hostname.replace('.instagram.com', '.ddinstagram.com');
-    return [{ title: 'DDInstagram', href: url.href }];
+    url.hostname = url.hostname.replace('.instagram.com', '.kkinstagram.com');
+    return [
+      { title: 'KKInstagram', href: url.href },
+    ];
   }
   return [];
 };
