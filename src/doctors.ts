@@ -84,8 +84,8 @@ const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
       // ref: https://github.com/Wikidepia/InstaFix/blob/main/main.go
       return [cleanUrlReply(url)];
     }
-    url.hostname = url.hostname.replace('.instagram.com', '.ddinstagram.com');
-    return [{ title: 'DDInstagram', href: cleanUrl(url).href }];
+    url.hostname = url.hostname.replace('.instagram.com', '.kkinstagram.com');
+    return [{ title: 'KKInstagram', href: cleanUrl(url).href }];
   }
   return [];
 };
