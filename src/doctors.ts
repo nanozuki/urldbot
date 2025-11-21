@@ -90,8 +90,22 @@ const instagram: Doctor = async (url: URL): Promise<Reply[]> => {
   return [];
 };
 
+const facebook: Doctor = async (url: URL): Promise<Reply[]> => {
+  if (
+    url.hostname === 'facebook.com' ||
+    url.hostname === 'www.facebook.com'
+  ) {
+    url.hostname = url.hostname.replace('facebook.com', 'facebed.com');
+    // Although I want to invoke cleanUrl to kill all tracking variables
+    // But only found the preview no longer working if some vars are removed
+    // So it behaves conservatively here.
+    return [{ title: 'FaceBed', href: url.href }];
+  }
+  return [];
+};
+
 export const cleaner: Doctor = async (url: URL): Promise<Reply[]> => {
   return [cleanUrlReply(url)];
 };
 
-export const doctors = [bilibili, twitter, xhs, youtube, instagram];
+export const doctors = [bilibili, twitter, xhs, youtube, instagram, facebook];
